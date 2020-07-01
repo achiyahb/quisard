@@ -1,60 +1,106 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+  <div id="app">
+    <v-app id="inspire">
+      <v-app id="inspire">
+        <v-navigation-drawer
+                v-model="drawer"
+                app
+        >
+          <v-list class="routerBtn"  dense>
+            <router-link to="/">
+            <v-list-item link>
+              <v-list-item-action>
+                <v-icon>mdi-home</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>Home</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            </router-link>
+            <router-link to="/chapters">
+            <v-list-item link>
+              <v-list-item-action>
+                <v-icon>mdi-email</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>Chapters</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            </router-link>
+            <router-link to="/courses/:cid/chapters/:chid/questions">
+              <v-list-item link>
+                <v-list-item-action>
+                  <v-icon>mdi-email</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>Questions</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
+          </v-list>
+        </v-navigation-drawer>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+        <v-app-bar
+                app
+                color="indigo"
+                dark
+        >
+          <v-toolbar-title>עורך השאלות</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer" ></v-app-bar-nav-icon>
+        </v-app-bar>
 
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>fas fa-external-link-alt</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+        <v-main>
+          <v-container
+                  class="fill-height"
+                  fluid
+          >
+            <v-row
+                    align="center"
+                    justify="center"
+            >
+              <router-view></router-view>
+            </v-row>
+          </v-container>
+        </v-main>
+        <v-footer
+                color="indigo"
+                app
+        >
+          <span class="white--text">&copy; 2019</span>
+        </v-footer>
+      </v-app>
+    </v-app>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Home from './views/Settings';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Home,
   },
 
   data: () => ({
-    //
+    drawer: null,
   }),
 };
 </script>
+
+<style>
+.routerBtn{
+  text-decoration-line: none;
+}
+
+.fas {
+  margin: 6px;
+
+}
+
+  a {
+    text-decoration-line: none;
+  }
+</style>
