@@ -46,7 +46,8 @@
 
             editedItem: {}
 
-        })
+        }),
+
 
     }
 </script>

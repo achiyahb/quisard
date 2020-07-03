@@ -64,10 +64,11 @@
                     <v-spacer></v-spacer>
                     <router-link to="/Home">
                         <v-btn class="mr-4">חזור</v-btn>
-                    </router-link>
                     <v-btn class="mr-4" @click="submit()">שמור</v-btn>
+                    </router-link>
                 </v-row>
             </v-container>
+
         </v-container>
     </v-form>
 </template>

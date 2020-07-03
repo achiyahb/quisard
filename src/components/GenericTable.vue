@@ -39,7 +39,7 @@
         name: "GenericTable",
         props: ['data'],
         data: () => ({
-            tableArray: []
+            tableArray: [],
         }),
         methods:{
             editItem(item){
@@ -64,18 +64,9 @@
             },
         },
         async created() {
-            const courses = await firebaseApi.getUserData()
-            console.log(courses)
-            let coursesArray = []
-            for (const prop in courses.courses){
-                coursesArray.push(prop);
-            }
-            console.log(coursesArray)
-            this.tableArray = []
-            for (const course of coursesArray){
-                this.tableArray.push(courses.courses[course])
-            }
-            console.log(this.tableArray)
+            const items = await firebaseApi.getUserData()
+            this.tableArray = firebaseApi.tableOfItems(items);
+
         },
         watch:{
             addedNewItem(){
