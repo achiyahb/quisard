@@ -3,7 +3,7 @@
         <v-data-table
                 :headers="data.headers"
                 :items-per-page="5"
-                :items="data.items"
+                :items="tableArray"
                 class="elevation-1"
         >
             <template v-slot:item.actions="{ item }">
@@ -19,7 +19,7 @@
                         @click="deleteItem(item.id)"
                 >
                 </v-icon>
-                <router-link :to="data.generation === 2 ? `/${data.type[0]}/${cid}/${data.type[1]}/${item.id}` : `/${data.type}/${item.id}`">
+                <router-link :to="`/${data.type}/${item.id}`">
                     <v-icon
                             small
                             class="fas fa-bolt"
@@ -33,17 +33,17 @@
 
 <script>
     import storageDriver from "../middelware/StorageDriver";
-
+    import firebaseApi from "../middelware/firebaseApi";
 
     export default {
         name: "GenericTable",
-        props: ['data', 'cid'],
+        props: ['data'],
         data: () => ({
-
+            tableArray: []
         }),
         methods:{
             editItem(item){
-                this.editedItem = item,
+                this.editedItem = item;
                     this.dialog = true;
             },
             cancel(){
@@ -63,8 +63,20 @@
                 this.items = storageDriver.getFromStorage(this.item.tableName)
             },
         },
-
-
+        async created() {
+            const courses = await firebaseApi.getUserData()
+            console.log(courses)
+            let coursesArray = []
+            for (const prop in courses.courses){
+                coursesArray.push(prop);
+            }
+            console.log(coursesArray)
+            this.tableArray = []
+            for (const course of coursesArray){
+                this.tableArray.push(courses.courses[course])
+            }
+            console.log(this.tableArray)
+        },
         watch:{
             addedNewItem(){
                 this.getData();

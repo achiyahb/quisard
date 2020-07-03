@@ -17,7 +17,7 @@
 <script>
     import storageDriver from "../middelware/StorageDriver";
     import GenericTable from "../components/GenericTable";
-    import axios from "axios";
+    import firebaseApi from "../middelware/firebaseApi";
 
     const tableName = 'courseDetails'
 
@@ -41,22 +41,15 @@
                     { text: 'פרטי המחבר', value: 'founderDetails' },
                     { text: 'פעולות', value: 'actions', sortable: false },
                 ],
-                items: this.courses,
-                type: ['courses'],
-                generation: 1
+                type: 'courses'
             },
 
             editedItem: {}
-        }),
-        created () {
-            axios.get('https://localhost:4000/users/1/courses')
-                .then(response => (this.courses = response.courses))
-        },
+
+        })
+
     }
 </script>
 
 <style scoped>
- .mx-2{
-     position: ;
- }
 </style>

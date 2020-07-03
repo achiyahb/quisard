@@ -1,6 +1,6 @@
 <template>
     <v-form v-model="valid">
-        <h1> {{ course ? 'ערוך קורס קיים' : 'צור קורס חדש'}}</h1>
+        <h1> צור קורס חדש</h1>
         <v-container>
             <v-row>
                 <v-col
@@ -59,15 +59,15 @@
                     ></v-text-field>
                 </v-col>
             </v-row>
-            <router-link to="/">
-                <v-container>
-                    <v-row>
-                        <v-spacer></v-spacer>
+            <v-container>
+                <v-row>
+                    <v-spacer></v-spacer>
+                    <router-link to="/Home">
                         <v-btn class="mr-4">חזור</v-btn>
-                        <v-btn class="mr-4" @click="submit()">שמור</v-btn>
-                    </v-row>
-                </v-container>
-            </router-link>
+                    </router-link>
+                    <v-btn class="mr-4" @click="submit()">שמור</v-btn>
+                </v-row>
+            </v-container>
         </v-container>
     </v-form>
 </template>
@@ -75,12 +75,13 @@
 
 <script>
     import StorageDriver from "../middelware/StorageDriver"
+    import firebaseApi from "../middelware/firebaseApi";
 
     const tableName = "courseDetails"
 
     export default {
         name: 'CourseSettings',
-        props: ['course'],
+        // props: ['course'],
         components: {
 
         },
@@ -96,16 +97,16 @@
         }),
         methods: {
             submit() {
-                this.item.id = new Date().getTime();
-                this.item.chapters = []
-                StorageDriver.insertToStorage(tableName, this.item)
+                // this.item.id = new Date().getTime();
+                firebaseApi.insertCourse(this.item);
+                //StorageDriver.insertToStorage(tableName, this.item)
                 this.$emit("addItem", item)
             }
         },
-        created() {
-            if (this.course){
-                this.item = this.course;
-            }
-        }
+        // created() {
+        //     if (this.course){
+        //         this.item = this.course;
+        //     }
+        // }
     }
 </script>
