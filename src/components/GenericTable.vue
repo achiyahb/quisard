@@ -19,7 +19,7 @@
                         @click="deleteItem(item.id)"
                 >
                 </v-icon>
-                <router-link :to="`/${data.type}/${item.id}`">
+                <router-link :to="`/${data.type}/${keyTable[0]}`">
                     <v-icon
                             small
                             class="fas fa-bolt"
@@ -40,6 +40,7 @@
         props: ['data'],
         data: () => ({
             tableArray: [],
+            keyTable: []
         }),
         methods:{
             editItem(item){
@@ -64,9 +65,9 @@
             },
         },
         async created() {
-            const items = await firebaseApi.getUserData()
+            const items = await firebaseApi.getUserData();
+            this.keyTable = firebaseApi.getThekey(items);
             this.tableArray = firebaseApi.tableOfItems(items);
-
         },
         watch:{
             addedNewItem(){

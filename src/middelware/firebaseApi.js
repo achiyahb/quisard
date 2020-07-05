@@ -17,6 +17,7 @@ function getUserData() {
     })
 }
 
+
 function writeData(data, path) {
     const user = firebaseInstance.firebase.auth().currentUser;
     firebaseInstance.firebase.database().ref(path).push(data);
