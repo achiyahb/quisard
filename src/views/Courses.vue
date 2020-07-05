@@ -17,7 +17,7 @@
 <script>
     import storageDriver from "../middelware/StorageDriver";
     import GenericTable from "../components/GenericTable";
-    import firebaseApi from "../middelware/firebaseApi";
+    import firebaseApi from "../middelware/firebaseA";
 
     const tableName = 'courseDetails'
 
@@ -28,19 +28,19 @@
             dialog: false,
             data: {
                 tableName: 'courseDetails',
-                headers: [
-                    {
+                headers: {
+                0:    {
                         text: 'שם הקורס',
                         value: 'courseName',
                         align: 'start',
                         sortable: 'true',
                     },
-                    { text: 'מטרת הקורס', value: 'goal' },
-                    { text: 'פרטים', value: 'courseDetails' },
-                    { text: 'שם המחבר', value: 'founderName' },
-                    { text: 'פרטי המחבר', value: 'founderDetails' },
-                    { text: 'פעולות', value: 'actions', sortable: false },
-                ],
+                 1:   { text: 'מטרת הקורס', value: 'goal' },
+                 2:   { text: 'פרטים', value: 'courseDetails' },
+                 3:   { text: 'שם המחבר', value: 'founderName' },
+                 4:   { text: 'פרטי המחבר', value: 'founderDetails' },
+                 5:   { text: 'פעולות', value: 'actions', sortable: false },
+                },
                 type: 'courses'
             },
 

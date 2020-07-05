@@ -64,7 +64,7 @@
                     <v-spacer></v-spacer>
                     <router-link to="/Home">
                         <v-btn class="mr-4">חזור</v-btn>
-                    <v-btn class="mr-4" @click="submit()">שמור</v-btn>
+                        <v-btn class="mr-4" @click="submit()">שמור</v-btn>
                     </router-link>
                 </v-row>
             </v-container>
@@ -75,8 +75,7 @@
 
 
 <script>
-    import StorageDriver from "../middelware/StorageDriver"
-    import firebaseApi from "../middelware/firebaseApi";
+    import firebaseApi from "../middelware/firebaseA";
 
     const tableName = "courseDetails"
 
@@ -98,16 +97,10 @@
         }),
         methods: {
             submit() {
-                // this.item.id = new Date().getTime();
-                firebaseApi.insertCourse(this.item);
-                //StorageDriver.insertToStorage(tableName, this.item)
+                let path = [`courses`];
+                firebaseApi.insertCourse(this.item, path);
                 this.$emit("addItem", item)
             }
         },
-        // created() {
-        //     if (this.course){
-        //         this.item = this.course;
-        //     }
-        // }
     }
 </script>

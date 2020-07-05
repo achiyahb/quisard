@@ -8,7 +8,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,key) in items.courses" :key="item.name">
+                <tr v-for="(item,key) in items" :key="item.name">
                     <td v-for="header in data.headers">{{item[header.value]}}
                     </td>
                     <td>
@@ -59,15 +59,15 @@
             deleteItem(id){
                 const data = null;
                 firebaseApi.deleteData(data, id);
-                this.getData()
+                this.getData(this.path)
             },
-            async getData(){
-                this.items = await firebaseApi.getUserData();
+            async getData(path){
+                this.items = await firebaseApi.getUserData(path);
             },
         },
         async created() {
-            let path = [`courses`]
-            this.items = await firebaseApi.getUserData(path)
+            const path = ["courses"]
+            this.items = await firebaseApi.getUserData(path);
         },
         watch:{
             addedNewItem(){

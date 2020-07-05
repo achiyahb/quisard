@@ -17,13 +17,13 @@
               </v-list-item-content>
             </v-list-item>
             </router-link>
-            <router-link to="/chapters">
+            <router-link to="/home">
             <v-list-item link>
               <v-list-item-action>
                 <v-icon>mdi-email</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title>Chapters</v-list-item-title>
+                <v-list-item-title>Courses</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             </router-link>
