@@ -5,10 +5,11 @@
                 <thead>
                 <tr>
                     <th class="text-right" v-for="header in data.headers">{{header.text}}</th>
+                    <th class="text-right">פעולות</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,key) in items" :key="item.name">
+                <tr v-for="(item,key) in items" :key="item .name">
                     <td v-for="header in data.headers">{{item[header.value]}}
                     </td>
                     <td>
@@ -35,39 +36,39 @@
 <script>
     import storageDriver from "../middelware/StorageDriver";
     import firebaseApi from "../middelware/firebaseA";
+    import firebase from 'firebase/app'
+    import 'firebase/database'
 
     export default {
         name: "GenericTable",
-        props: ['data'],
+        props: ['data', 'cid'],
         data: () => ({
             items: []
         }),
         methods:{
-            editItem(item){
-                this.editedItem = item;
-                    this.dialog = true;
-            },
-            cancel(){
-                this.dialog = false;
-            },
-            save(id){
-
-                storageDriver.updateToStorage(this.item.tableName, this.editItem(), id)
-                this.editedItem = {}
-                this.dialog = false;
-            },
             deleteItem(id){
-                const data = null;
-                firebaseApi.deleteData(data, id);
-                this.getData(this.path)
-            },
-            async getData(path){
-                this.items = await firebaseApi.getUserData(path);
+                const path = ["courses"]
+                path.push(id)
+                firebaseApi.deleteData(path);
             },
         },
-        async created() {
+        // firebase: {
+        //     items: firebaseApi.db.ref(),
+        // },
+         created() {
             const path = ["courses"]
-            this.items = await firebaseApi.getUserData(path);
+            console.log(this.$route.params.cid)
+            if (this.$route.params.cid){
+            const params = this.$route.params.cid
+            const part = "chapters"
+            path.push(params);
+            path.push(part);
+            }
+            const self = this;
+            firebaseApi.getUserData(path)
+             .then(result => {
+                 self.items = result
+             })
         },
         watch:{
             addedNewItem(){

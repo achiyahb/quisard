@@ -6,7 +6,6 @@
 
       <v-row>
         <v-spacer></v-spacer>
-<!--        <router-link :to="`/${data.type}/${key}`">-->
         <router-link :to="`/courses/${$route.params.cid}/chapters/new-chapter`">
           <v-btn class="mx-2" fab dark color="indigo">
             <v-icon dark>fa-plus</v-icon>
@@ -19,7 +18,7 @@
 
 <script>
   import storageDriver from "../middelware/StorageDriver";
-  import GenericTable from "../components/GenericTable";
+  import GenericTable from "./GenericTable";
 
   export default {
     name: "chapters",
@@ -37,7 +36,7 @@
           },
           { text: 'פרטים', value: 'chapterDetails' },
           { text: 'מספר השאלות', value: 'questionsNumber' },
-          { text: 'פעולות', value: 'actions', sortable: false },
+          // { text: 'פעולות', value: 'actions', sortable: false },
         ],
         type: ['course','chapter'],
         generation: 2,

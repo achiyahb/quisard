@@ -1,34 +1,43 @@
 import firebaseInstance from './firebase';
 import database from 'firebase/database'
 
+const db = firebaseInstance.firebase.database();
+
 export default {
     getUserData,
     writeData,
     insertCourse,
     deleteData,
+    updateCourse
 }
-
-async function getUserData(pathArr) {
+function getUserData(pathArr) {
     const path = createPath(pathArr)
-
-    return await firebaseInstance.firebase.database().ref(path).once('value')
+    return db.ref(path).once('value')
         .then(res => {
             return res.val();
         })
 }
 
-function writeData(data, path) {
-    firebaseInstance.firebase.database().ref(path).push(data);
+function updateData(data, path){
+    db.ref(path).set(data);
 }
 
-function deleteData(data, course_id) {
-    const user = firebaseInstance.firebase.auth().currentUser;
-    firebaseInstance.firebase.database().ref(`users/${user.uid}/courses/${course_id}`).set(data);
+function writeData(data, path) {
+    db.ref(path).push(data);
+}
+
+function removeData(path) {
+    db.ref(path).set(null);
 }
 
 function insertCourse(data, pathArr) {
     const path = createPath(pathArr)
     writeData(data, path);
+}
+
+function deleteData(pathArr) {
+    const path = createPath(pathArr)
+    removeData(path);
 }
 
 // async function selectCourses(pathArr) {
@@ -38,6 +47,7 @@ function insertCourse(data, pathArr) {
 //
 // }
 
+
 function createPath(pathArr) {
     const user = firebaseInstance.firebase.auth().currentUser;
     let path = "users/" + user.uid;
@@ -45,6 +55,11 @@ function createPath(pathArr) {
         path = path + `/` + part;
     }
     return path;
+}
+
+function updateCourse(data, pathArr) {
+    const path = createPath(pathArr)
+    updateData(data, path);
 }
 
 

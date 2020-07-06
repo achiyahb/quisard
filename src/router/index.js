@@ -5,51 +5,28 @@ import Login from "../views/Login";
 Vue.use(VueRouter)
 
   const routes = [
-    {
-      path: '/',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/Home',
-      name: 'Home',
-      component: () => import('../views/Home.vue')
-    },
-    {
-      path: '/Course-Settings',
-      name: 'Settings',
-      component: () => import('../views/Settings.vue')
-    },
-    {
-      path: '/courses/:cid/chapters/new-chapter',
-      name: 'Questions',
-      component: () => import('../components/NewChapterComp.vue')
-    },
-    {
-      path: '/courses/:cid/chapters/:chaid/questions/new-question',
-      name: 'new-question',
-      component: () => import('../components/questions/InputCom.vue')
-    },
-    {
-      path: '/courses/:cid/chapters/:chaid',
-      name: 'chapter',
-      component: () => import('../views/Chapter.vue')
-    },
-  {
-    path: '/courses/:cid/chapters',
-    name: 'Chapters',
-    component: () => import('../views/Chapters.vue')
-  },
-    {
-      path: '/courses/new-course',
-      name: 'New-course',
-      component: () => import('../components/NewCourseComp.vue')
-    },
-    {
-      path: '/courses/:cid',
-      name: 'course',
-      component: () => import('../views/Course.vue')
-    },
+    { path: '/', name: 'Login', component: Login },
+
+    { path: '/Home', name: 'Home', component: () => import('../views/Home.vue')},
+
+    // { path: '/Course-Settings', name: 'Settings', component: () => import('../views/Settings.vue') },
+
+    { path: '/courses/:cid/chapters/new-chapter', name: 'NewChapterComp',
+      component: () => import('../components/NewChapterComp.vue') },
+
+    { path: '/courses/:cid/chapters/:chaid/questions/new-question', name: 'new-question',
+      component: () => import('../components/questions/InputCom.vue')},
+
+    { path: '/courses/:cid/chapters/:chaid', name: 'chapter',
+      component: () => import('../views/Chapter.vue') },
+
+    { path: '/courses/:cid/chapters', name: 'Chapters',
+    component: () => import('../components/Chapters.vue')},
+
+    { path: '/courses/new-course', name: 'New-course', component: () => import('../components/NewCourseComp.vue')},
+
+    { path: '/courses/:cid', name: 'course', component: () => import('../views/Course.vue') },
+
     { path: '/Item/:id', component: () => import('../views/Item.vue') }
 ]
 

@@ -1,6 +1,7 @@
 <template>
     <v-form v-model="valid">
-        <h1> צור קורס חדש</h1>
+        <h1 v-if="!$route.params.cid"> צור קורס חדש:</h1>
+        <h1 v-if="$route.params.cid">ערוך קורס קיים:</h1>
         <v-container>
             <v-row>
                 <v-col
@@ -64,7 +65,12 @@
                     <v-spacer></v-spacer>
                     <router-link to="/Home">
                         <v-btn class="mr-4">חזור</v-btn>
-                        <v-btn class="mr-4" @click="submit()">שמור</v-btn>
+                        <div v-if="!$route.params.cid">
+                            <v-btn class="mr-4" @click="submit(item)">שמור</v-btn>
+                        </div>
+                        <div v-if="$route.params.cid">
+                            <v-btn class="mr-4" @click="update(item)">ערוך</v-btn>
+                        </div>
                     </router-link>
                 </v-row>
             </v-container>
@@ -77,30 +83,53 @@
 <script>
     import firebaseApi from "../middelware/firebaseA";
 
-    const tableName = "courseDetails"
+    const tableName = "newCourseComp"
 
     export default {
         name: 'CourseSettings',
-        // props: ['course'],
         components: {
 
         },
         data: () => ({
             valid: false,
             item: {
-                courseName: '',
-                goal: '',
-                courseDetails: '',
-                founderName: '',
-                founderDetails: '',
+                courseDetails: "",
+                courseName: "",
+                founderDetails: "",
+                founderName: "",
+                goal: ""
             }
         }),
         methods: {
-            submit() {
+            submit(item) {
                 let path = [`courses`];
-                firebaseApi.insertCourse(this.item, path);
-                this.$emit("addItem", item)
+                firebaseApi.insertCourse(item, path);
+            },
+            update(item) {
+                const path = ["courses"]
+                const params = this.$route.params.cid;
+                path.push(params);
+                firebaseApi.updateCourse(item, path);
+
             }
+        },
+        created() {
+             if(!this.$route.params.cid){
+                 return
+             }
+            let item = []
+            const params = this.$route.params.cid;
+            console.log(params)
+            const path = ["courses"]
+            path.push(params);
+
+            const self = this;
+            item = firebaseApi.getUserData(path)
+                .then(result => {
+                    self.item = result
+                })
+            console.log(item);
+            this.item = item;
         },
     }
 </script>

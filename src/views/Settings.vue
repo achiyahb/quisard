@@ -6,7 +6,7 @@
                         cols="12"
                         md="7"
                 >
-                    <CourseSettings></CourseSettings>
+<!--                    <CourseSettings></CourseSettings>-->
 
                 </v-col>
                 <v-col

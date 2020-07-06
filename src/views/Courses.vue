@@ -39,7 +39,7 @@
                  2:   { text: 'פרטים', value: 'courseDetails' },
                  3:   { text: 'שם המחבר', value: 'founderName' },
                  4:   { text: 'פרטי המחבר', value: 'founderDetails' },
-                 5:   { text: 'פעולות', value: 'actions', sortable: false },
+                 // 5:   { text: 'פעולות', value: 'actions', sortable: false },
                 },
                 type: 'courses'
             },

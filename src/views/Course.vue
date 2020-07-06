@@ -1,7 +1,6 @@
 <template>
     <div>
-        {{$route.params}}
-        <NewCourseComp :course="course"></NewCourseComp>
+        <NewCourseComp></NewCourseComp>
         <Chapters :cid="$route.params.cid"></Chapters>
     </div>
 
@@ -9,8 +8,7 @@
 
 <script>
     import NewCourseComp from "../components/NewCourseComp";
-    import StorageDriver from "../middelware/StorageDriver";
-    import Chapters from "./Chapters";
+    import Chapters from "../components/Chapters";
 
     const tableName = 'courseDetails';
 
@@ -18,13 +16,9 @@
         name: "Course",
         components: {NewCourseComp,Chapters},
         data: () => ({
-            course: {},
 
-        }),
-        created() {
-            this.course = StorageDriver.findItemById(this.$route.params.cid, undefined, tableName).item
 
-        }
+        })
     }
 </script>
 

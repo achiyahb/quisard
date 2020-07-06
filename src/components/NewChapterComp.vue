@@ -1,6 +1,7 @@
 <template>
     <v-form v-model="valid">
         <h1> {{ chapter ? 'ערוך פרק קיים' : 'צור פרק חדש'}}</h1>
+
         <v-container>
             <v-row>
                 <v-col
@@ -42,8 +43,17 @@
                 <v-container>
                     <v-row>
                         <v-spacer></v-spacer>
-                        <v-btn class="mr-4">חזור</v-btn>
-                        <v-btn class="mr-4" @click="submit()">שמור</v-btn>
+                        <router-link :to="`/courses/${cid}`">
+                            <v-btn class="mr-4">חזור</v-btn>
+                        </router-link>
+                            <div v-if="!$route.params.chaid">
+                                <v-btn class="mr-4" @click="submit(item)">שמור</v-btn>
+                            </div>
+
+                            <div v-if="$route.params.chaid">
+                                <v-btn class="mr-4" @click="update(item)">ערוך</v-btn>
+                            </div>
+
                     </v-row>
                 </v-container>
             </router-link>
@@ -53,9 +63,7 @@
 
 
 <script>
-    import StorageDriver from "../middelware/StorageDriver"
-
-    const tableName = "chapterDetails"
+    import firebaseApi from "../middelware/firebaseA";
 
     export default {
         name: 'chapterDetails',
@@ -69,20 +77,26 @@
                 chapterName: '',
                 chapterDetails: '',
                 questionsNumber: '',
-            }
+            },
+            cid: "",
         }),
         methods: {
-            submit() {
-                this.item.id = new Date().getTime();
+            update() {
                 this.item.questions = []
-                StorageDriver.insertToStorage(tableName, this.item)
                 this.$emit("addItem", item)
+            },
+            submit(item) {
+                const path = ["courses"]
+                const params = this.$route.params.cid;
+                const part = "chapters"
+                path.push(params);
+                path.push(part)
+                firebaseApi.insertCourse(item, path);
             }
         },
         created() {
-            if (this.course){
-                this.item = this.course;
-            }
+             const cid = this.$router.params.cid;
+             this.cid = cid;
         }
     }
 </script>
