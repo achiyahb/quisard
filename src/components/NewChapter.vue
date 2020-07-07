@@ -1,6 +1,7 @@
 <template>
     <v-form v-model="valid">
-        <h1> {{ chapter ? 'ערוך פרק קיים' : 'צור פרק חדש'}}</h1>
+        <h1 v-if="!$route.params.chaid"> צור פרק חדש:</h1>
+        <h1 v-else>ערוך פרק קיים:</h1>
 
         <v-container>
             <v-row>
@@ -39,24 +40,21 @@
                 </v-col>
             </v-row>
 <!--            need to define a another destination-->
-            <router-link to="/">
                 <v-container>
                     <v-row>
                         <v-spacer></v-spacer>
-                        <router-link :to="`/courses/${cid}`">
+                        <router-link :to="`/courses/${$route.params.cid}`">
                             <v-btn class="mr-4">חזור</v-btn>
-                        </router-link>
+
                             <div v-if="!$route.params.chaid">
                                 <v-btn class="mr-4" @click="submit(item)">שמור</v-btn>
                             </div>
-
+                        </router-link>
                             <div v-if="$route.params.chaid">
                                 <v-btn class="mr-4" @click="update(item)">ערוך</v-btn>
                             </div>
-
                     </v-row>
                 </v-container>
-            </router-link>
         </v-container>
     </v-form>
 </template>
@@ -78,25 +76,37 @@
                 chapterDetails: '',
                 questionsNumber: '',
             },
-            cid: "",
+
         }),
         methods: {
-            update() {
-                this.item.questions = []
-                this.$emit("addItem", item)
-            },
             submit(item) {
                 const path = ["courses"]
-                const params = this.$route.params.cid;
-                const part = "chapters"
-                path.push(params);
-                path.push(part)
+                path.push(this.$route.params.cid);
+                path.push("chapters")
                 firebaseApi.insertCourse(item, path);
+            },
+            update(item) {
+                const path = ["courses"]
+                path.push(this.$route.params.cid);
+                path.push("chapters")
+                path.push(this.$route.params.chaid)
+                firebaseApi.updateCourse(item, path);
             }
         },
         created() {
-             const cid = this.$router.params.cid;
-             this.cid = cid;
+            if(!this.$route.params.chaid){
+                return
+            }
+            const path = ["courses"]
+            path.push(this.$route.params.cid);
+            path.push("chapters")
+            path.push(this.$route.params.chaid)
+            const self = this;
+            this.item = firebaseApi.getUserData(path)
+                .then(result => {
+                    self.item = result
+                })
+
         }
     }
 </script>

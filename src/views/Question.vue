@@ -14,8 +14,8 @@
 <script>
 // @ is an alias to /src
 import TableCom from "../components/questions/TableCom";
-import InputCom from "../components/questions/InputCom";
-import NewChapterComp from "../components/NewChapterComp";
+import InputCom from "../components/questions/NewQuestion";
+import NewChapterComp from "../components/NewChapter";
 export default {
   name: 'Questions',
   components: {

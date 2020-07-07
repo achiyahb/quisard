@@ -68,10 +68,11 @@
                         <div v-if="!$route.params.cid">
                             <v-btn class="mr-4" @click="submit(item)">שמור</v-btn>
                         </div>
+                    </router-link>
                         <div v-if="$route.params.cid">
                             <v-btn class="mr-4" @click="update(item)">ערוך</v-btn>
                         </div>
-                    </router-link>
+
                 </v-row>
             </v-container>
 
@@ -114,22 +115,16 @@
             }
         },
         created() {
-             if(!this.$route.params.cid){
-                 return
-             }
-            let item = []
-            const params = this.$route.params.cid;
-            console.log(params)
+             // if(!this.$route.params.cid){
+             //     return
+             // }
             const path = ["courses"]
-            path.push(params);
-
+            path.push(this.$route.params.cid);
             const self = this;
-            item = firebaseApi.getUserData(path)
+            this.item = firebaseApi.getUserData(path)
                 .then(result => {
                     self.item = result
                 })
-            console.log(item);
-            this.item = item;
         },
     }
 </script>

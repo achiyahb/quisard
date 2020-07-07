@@ -1,7 +1,8 @@
 <template>
     <v-form v-model="valid">
       <v-container>
-        <h1>כתוב שאלה חדשה</h1>
+        <h1 v-if="!$route.params.qid"> צור שאלה חדשה:</h1>
+        <h1 v-else>ערוך שאלה קיימת:</h1>
         <v-row>
           <v-col
                   cols="12"
@@ -58,19 +59,30 @@
                         required
                 ></v-text-field>
           </v-col>
-          <v-spacer></v-spacer>
-          <v-card-actions>
-             <v-btn class="mr-4" @click="submit()">submit</v-btn>
-          </v-card-actions>
-        </v-row>
 
+        </v-row>
+        <v-container>
+          <v-row>
+            <v-spacer></v-spacer>
+            <router-link :to="`/courses/${$route.params.cid}/chapters/${$route.params.chaid}`">
+              <v-btn class="mr-4">חזור</v-btn>
+              <div v-if="!$route.params.qid">
+                <v-btn class="mr-4" @click="submit(item)">שמור</v-btn>
+              </div>
+            </router-link>
+            <div v-if="$route.params.qid">
+              <v-btn class="mr-4" @click="update(item)">ערוך</v-btn>
+            </div>
+
+          </v-row>
+        </v-container>
       </v-container>
     </v-form>
 </template>
 
 <script>
-  import StorageDriver from "../../middelware/StorageDriver"
-  const tableName = "questions"
+  import firebaseApi from "../../middelware/firebaseA";
+
 
   export default {
     name: 'InputCom',
@@ -87,13 +99,26 @@
           alt3: '',
         }
       }),
-    methods: {
-      submit() {
-        this.item.id = new Date().getTime();
-        StorageDriver.insertToStorage(tableName, this.item)
-        this.$emit("addItem", item)
-      }
-    }
+      methods: {
+        submit(item) {
+          const path = ["courses"]
+          path.push(this.$route.params.cid);
+          path.push("chapters")
+          path.push(this.$route.params.chaid);
+          path.push("questions")
+          firebaseApi.insertCourse(item, path);
+        },
+        update(item) {
+          const path = ["courses"]
+          path.push(this.$route.params.cid);
+          path.push("chapters")
+          path.push(this.$route.params.chaid)
+          path.push("questions")
+          path.push(this.$route.params.qid)
+          firebaseApi.updateCourse(item, path);
+        }
+      },
+
   }
 </script>
 
