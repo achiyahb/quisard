@@ -38,8 +38,7 @@
           { text: 'מספר השאלות', value: 'questionsNumber' },
           // { text: 'פעולות', value: 'actions', sortable: false },
         ],
-        type: ['course','chapter'],
-        generation: 2,
+        pathNum: 3
       },
 
       editedItem: {}

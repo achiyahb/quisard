@@ -4,7 +4,7 @@
         <v-container>
             <v-row>
                 <v-spacer></v-spacer>
-                <router-link to="/courses/:cid/chapters/new-chapter">
+                <router-link :to="`/courses/${$route.params.cid}/chapters/${$route.params.chaid}/questions/new-question`">
                     <v-btn class="mx-2" fab dark color="indigo">
                         <v-icon dark>fa-plus</v-icon>
                     </v-btn>
@@ -21,7 +21,7 @@
     const tableName = 'chapterDetails'
 
     export default {
-        name: "Courses",
+        name: "questions",
         props: ['cid'],
         components: {GenericTable},
         data: () =>({
@@ -30,18 +30,17 @@
                 tableName: 'chapterDetails',
                 headers: [
                     {
-                        text: 'שם הפרק',
-                        value: 'chapterName',
+                        text: 'שאלה',
+                        value: 'question',
                         align: 'start',
                         sortable: 'true',
                     },
-                    { text: 'פרטים', value: 'chapterDetails' },
-                    { text: 'מספר השאלות', value: 'questionsNumber' },
-                    { text: 'פעולות', value: 'actions', sortable: false },
+                    { text: 'תשובה נכונה', value: 'correctAnswer' },
+                    { text: 'מסיח 1', value: 'alt1' },
+                    { text: 'מסיח 2', value: 'alt2' },
+                    { text: 'מסיח 3', value: 'alt3' },
                 ],
-                items: storageDriver.getFromStorage(tableName),
-                type: ['course','chapter'],
-                generation: 2,
+                pathNum: 5
             },
 
             editedItem: {}

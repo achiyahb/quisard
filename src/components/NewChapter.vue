@@ -65,10 +65,8 @@
 
     export default {
         name: 'chapterDetails',
-        props: ['chapter'],
-        components: {
-
-        },
+        props: ['chapter', 'pathNum'],
+        components: {},
         data: () => ({
             valid: false,
             item: {
@@ -80,33 +78,26 @@
         }),
         methods: {
             submit(item) {
-                const path = ["courses"]
-                path.push(this.$route.params.cid);
-                path.push("chapters")
-                firebaseApi.insertCourse(item, path);
+                const self = this;
+                const path = firebaseApi.pathFactory(3, self)
+                firebaseApi.writeData(item, path);
             },
             update(item) {
-                const path = ["courses"]
-                path.push(this.$route.params.cid);
-                path.push("chapters")
-                path.push(this.$route.params.chaid)
-                firebaseApi.updateCourse(item, path);
+                const self = this;
+                const path = firebaseApi.pathFactory(this.pathNum, self)
+                firebaseApi.updateData(item, path);
             }
         },
         created() {
-            if(!this.$route.params.chaid){
+            if (!this.pathNum) {
                 return
             }
-            const path = ["courses"]
-            path.push(this.$route.params.cid);
-            path.push("chapters")
-            path.push(this.$route.params.chaid)
             const self = this;
-            this.item = firebaseApi.getUserData(path)
+            const path = firebaseApi.pathFactory(this.pathNum, self)
+            this.item = firebaseApi.getData(path)
                 .then(result => {
                     self.item = result
                 })
-
         }
     }
 </script>

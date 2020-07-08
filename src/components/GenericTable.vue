@@ -18,7 +18,21 @@
                             class="fas fa-trash-alt"
                             @click="deleteItem(key)"
                     ></v-icon>
-                        <router-link :to="`/${data.type}/${key}`">
+                        <router-link v-if="$route.params.chaid" :to="`/courses/${$route.params.cid}/chapters/${$route.params.chaid}/questions/${key}`"  >
+                            <v-icon
+                                    small
+                                    class="fas fa-bolt"
+                            >
+                            </v-icon>
+                        </router-link>
+                        <router-link v-else-if="$route.params.cid" :to="`/courses/${$route.params.cid}/chapters/${key}`"  >
+                            <v-icon
+                                    small
+                                    class="fas fa-bolt"
+                            >
+                            </v-icon>
+                        </router-link>
+                        <router-link v-else :to="`/courses/${key}`">
                             <v-icon
                                     small
                                     class="fas fa-bolt"
@@ -38,37 +52,30 @@
     import firebaseApi from "../middelware/firebaseA";
     import firebase from 'firebase/app'
     import 'firebase/database'
+    import firebaseInstance from '../middelware/firebase';
+    import database from 'firebase/database'
 
+    const db = firebaseInstance.firebase.database();
     export default {
         name: "GenericTable",
-        props: ['data', 'cid'],
+        props: ['data', 'cid' ,'pathNum'],
         data: () => ({
             items: []
         }),
         methods:{
             deleteItem(id){
-                const path = ["courses"]
-                path.push(id)
+                const self = this;
+                const path = firebaseApi.pathFactory(this.data.pathNum, self, id)
                 firebaseApi.deleteData(path);
             },
         },
-        // firebase: {
-        //     items: firebaseApi.db.ref(),
-        // },
          created() {
-            const path = ["courses"]
-            console.log(this.$route.params.cid)
-            if (this.$route.params.cid){
-            const params = this.$route.params.cid
-            const part = "chapters"
-            path.push(params);
-            path.push(part);
-            }
-            const self = this;
-            firebaseApi.getUserData(path)
-             .then(result => {
-                 self.items = result
-             })
+             const self = this;
+             const path = firebaseApi.pathFactory(this.data.pathNum, self)
+             this.items = firebaseApi.getData(path)
+                 .then(result => {
+                     self.items = result
+                 })
         },
         watch:{
             addedNewItem(){

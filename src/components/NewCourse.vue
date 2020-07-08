@@ -88,6 +88,7 @@
 
     export default {
         name: 'CourseSettings',
+        props: ['pathNum'],
         components: {
 
         },
@@ -103,28 +104,27 @@
         }),
         methods: {
             submit(item) {
-                let path = [`courses`];
-                firebaseApi.insertCourse(item, path);
+                const self = this;
+                const path = firebaseApi.pathFactory(1, self)
+                firebaseApi.writeData(item, path);
             },
             update(item) {
-                const path = ["courses"]
-                const params = this.$route.params.cid;
-                path.push(params);
-                firebaseApi.updateCourse(item, path);
+                const self = this;
+                const path = firebaseApi.pathFactory(this.pathNum, self)
+                firebaseApi.updateData(item, path);
 
             }
         },
         created() {
-             // if(!this.$route.params.cid){
-             //     return
-             // }
-            const path = ["courses"]
-            path.push(this.$route.params.cid);
+            if (!this.pathNum) {
+                return
+            }
             const self = this;
-            this.item = firebaseApi.getUserData(path)
+            const path = firebaseApi.pathFactory(this.pathNum, self)
+            this.item = firebaseApi.getData(path)
                 .then(result => {
                     self.item = result
                 })
-        },
+        }
     }
 </script>

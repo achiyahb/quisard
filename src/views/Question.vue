@@ -1,36 +1,29 @@
 <template>
   <div class="Questions">
-    {{$route.params.chid}}
-    <NewChapterComp></NewChapterComp>
-  <TableCom  :addedNewItem="addedNewItem"/>
-    <router-link to="/courses/:cid/chapters/:chid/questions/new-question">
-      <v-btn class="mx-2" fab dark color="indigo">
-        <v-icon dark>fa-plus</v-icon>
-      </v-btn>
-    </router-link>
+    {{$route.params.qid}}
+    <NewQuestion :path-num="pathNum"></NewQuestion>
+<!--    <router-link to="/courses/:cid/chapters/:chid/questions/new-question">-->
+<!--      <v-btn class="mx-2" fab dark color="indigo">-->
+<!--        <v-icon dark>fa-plus</v-icon>-->
+<!--      </v-btn>-->
+<!--    </router-link>-->
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import TableCom from "../components/questions/TableCom";
-import InputCom from "../components/questions/NewQuestion";
-import NewChapterComp from "../components/NewChapter";
+import NewQuestion from "../components/questions/NewQuestion";
+import firebaseApi from "../middelware/firebaseA";
+
 export default {
-  name: 'Questions',
+  name: 'Question',
   components: {
-    TableCom,InputCom,NewChapterComp
+   NewQuestion
   },
   data: () => ({
     dialog: false,
-    addedNewItem: false
+    pathNum: 6
   }),
-  methods: {
-    dataChanged() {
-      this.addedNewItem = !this.addedNewItem;
-    },
 
-
-  }
 }
 </script>

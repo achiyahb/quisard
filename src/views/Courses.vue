@@ -41,7 +41,7 @@
                  4:   { text: 'פרטי המחבר', value: 'founderDetails' },
                  // 5:   { text: 'פעולות', value: 'actions', sortable: false },
                 },
-                type: 'courses'
+                pathNum: 1
             },
 
             editedItem: {}

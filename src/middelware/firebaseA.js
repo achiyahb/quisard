@@ -4,14 +4,16 @@ import database from 'firebase/database'
 const db = firebaseInstance.firebase.database();
 
 export default {
-    getUserData,
     writeData,
-    insertCourse,
     deleteData,
-    updateCourse
+    updateData,
+    getData,
+    pathFactory
 }
-function getUserData(pathArr) {
-    const path = createPath(pathArr)
+
+
+// the good one
+function getData(path) {
     return db.ref(path).once('value')
         .then(res => {
             return res.val();
@@ -26,44 +28,20 @@ function writeData(data, path) {
     db.ref(path).push(data);
 }
 
-function removeData(path) {
+function deleteData(path) {
     db.ref(path).set(null);
 }
 
-function insertCourse(data, pathArr) {
-    const path = createPath(pathArr)
-    writeData(data, path);
-}
 
-function deleteData(pathArr) {
-    const path = createPath(pathArr)
-    removeData(path);
-}
-
-// async function selectCourses(pathArr) {
-//
-//     let items = await getUserData(path);
-//     return items
-//
-// }
-
-
-function createPath(pathArr) {
+function pathFactory(i, self, id) {
     const user = firebaseInstance.firebase.auth().currentUser;
-    let path = "users/" + user.uid;
-    for (let part of pathArr){
-        path = path + `/` + part;
+    const fullPath = ["users", user.uid, "courses", self.$route.params.cid,"chapters",self.$route.params.chaid,"questions",self.$route.params.qid]
+    const pathArray = fullPath.splice(0,i+2)
+    if (id){
+        pathArray.push(id)
     }
-    return path;
+    return pathArray.join('/')
 }
-
-function updateCourse(data, pathArr) {
-    const path = createPath(pathArr)
-    updateData(data, path);
-}
-
-
-
 
 
 

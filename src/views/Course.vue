@@ -1,13 +1,14 @@
 <template>
     <div>
-        <NewCourseComp></NewCourseComp>
+        <new-course-comp :path-num="pathNum"></new-course-comp>
+        <h2>הפרקים:</h2>
         <Chapters :cid="$route.params.cid"></Chapters>
     </div>
 
 </template>
 
 <script>
-    import NewCourseComp from "../components/NewCourseComp";
+    import NewCourseComp from "../components/NewCourse";
     import Chapters from "../components/Chapters";
 
     const tableName = 'courseDetails';
@@ -16,7 +17,7 @@
         name: "Course",
         components: {NewCourseComp,Chapters},
         data: () => ({
-
+            pathNum: 2
 
         })
     }

@@ -69,11 +69,13 @@
               <div v-if="!$route.params.qid">
                 <v-btn class="mr-4" @click="submit(item)">שמור</v-btn>
               </div>
-            </router-link>
             <div v-if="$route.params.qid">
               <v-btn class="mr-4" @click="update(item)">ערוך</v-btn>
             </div>
-
+            </router-link>
+            <div v-if="$route.params.qid">
+              <v-btn class="mr-4" @click="update(item)">החל</v-btn>
+            </div>
           </v-row>
         </v-container>
       </v-container>
@@ -84,10 +86,11 @@
   import firebaseApi from "../../middelware/firebaseA";
 
 
+
   export default {
     name: 'InputCom',
 
-
+      props: ['pathNum'],
 
       data: () => ({
         valid: false,
@@ -101,24 +104,27 @@
       }),
       methods: {
         submit(item) {
-          const path = ["courses"]
-          path.push(this.$route.params.cid);
-          path.push("chapters")
-          path.push(this.$route.params.chaid);
-          path.push("questions")
-          firebaseApi.insertCourse(item, path);
+          const self = this;
+          const path = firebaseApi.pathFactory(5, self)
+          firebaseApi.writeData(item, path);
         },
         update(item) {
-          const path = ["courses"]
-          path.push(this.$route.params.cid);
-          path.push("chapters")
-          path.push(this.$route.params.chaid)
-          path.push("questions")
-          path.push(this.$route.params.qid)
-          firebaseApi.updateCourse(item, path);
+          const self = this;
+          const path = firebaseApi.pathFactory(this.pathNum, self)
+          firebaseApi.updateData(item, path);
         }
       },
-
+    created() {
+      if (!this.pathNum){
+        return
+      }
+      const self = this;
+      const path = firebaseApi.pathFactory(this.pathNum, self)
+      this.item = firebaseApi.getData(path)
+              .then(result => {
+                self.item = result
+              })
+    }
   }
 </script>
 

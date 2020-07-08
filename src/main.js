@@ -14,6 +14,7 @@ Vue.config.productionTip = false
 
 firebaseInstance.firebase.auth().onAuthStateChanged((user) =>{
   window.user = user;
+  localStorage.setItem('uid', user.uid);
   new Vue({
     router,
     vuetify,
