@@ -13,7 +13,6 @@
     import firebase from 'firebase'
     import firebaseInstance from "../middelware/firebase"
     const provider = new firebase.auth.GoogleAuthProvider();
-
     export default{
         name: "Login",
         methods: {
@@ -37,6 +36,7 @@
                     var credential = error.credential;
                     // ...
                 });
+
             }
         }
     }

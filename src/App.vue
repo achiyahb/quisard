@@ -47,6 +47,8 @@
         >
           <v-toolbar-title>עורך השאלות</v-toolbar-title>
           <v-spacer></v-spacer>
+           <logout></logout>
+          <login></login>
           <v-app-bar-nav-icon @click.stop="drawer = !drawer" ></v-app-bar-nav-icon>
         </v-app-bar>
 
@@ -76,11 +78,15 @@
 
 <script>
 import Home from './views/Settings';
+import Logout from "./components/logOut";
+import Login from "./views/Login";
 
 export default {
   name: 'App',
 
   components: {
+    Login,
+    Logout,
     Home,
   },
 
