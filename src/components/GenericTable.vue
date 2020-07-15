@@ -1,44 +1,24 @@
 <template>
     <v-container>
-        <v-simple-table>
+        <v-simple-table id="table">
             <template v-slot:default>
                 <thead>
                 <tr>
-                    <th class="text-right" v-for="header in data.headers">{{header.text}}</th>
+                    <th class="text-right" v-for="header in data.headers" :class="{one: header.style}">{{header.text}}</th>
                     <th class="text-right">פעולות</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(item,key) in items" :key="item .name">
-                    <td v-for="header in data.headers">{{item[header.value]}}
+                    <td v-for="header in data.headers" :class="{one: header.style}" @click="editChild(key)">
+                        {{item[header.value]}}
                     </td>
                     <td>
-                    <v-icon
-                            small
-                            class="fas fa-trash-alt"
-                            @click="deleteItem(key)"
-                    ></v-icon>
-                        <router-link v-if="$route.params.chaid" :to="`/courses/${$route.params.cid}/chapters/${$route.params.chaid}/questions/${key}`"  >
-                            <v-icon
-                                    small
-                                    class="fas fa-bolt"
-                            >
-                            </v-icon>
-                        </router-link>
-                        <router-link v-else-if="$route.params.cid" :to="`/courses/${$route.params.cid}/chapters/${key}`"  >
-                            <v-icon
-                                    small
-                                    class="fas fa-bolt"
-                            >
-                            </v-icon>
-                        </router-link>
-                        <router-link v-else :to="`/courses/${key}`">
-                            <v-icon
-                                    small
-                                    class="fas fa-bolt"
-                            >
-                            </v-icon>
-                        </router-link>
+                        <v-icon
+                                small
+                                class="fas fa-trash-alt"
+                                @click="deleteItem(key)"
+                        ></v-icon>
                     </td>
                 </tr>
                 </tbody>
@@ -54,6 +34,7 @@
     import 'firebase/database'
     import firebaseInstance from '../middelware/firebase';
     import database from 'firebase/database'
+    import router from "../router";
 
     const db = firebaseInstance.firebase.database();
     export default {
@@ -68,6 +49,16 @@
                 const path = firebaseApi.pathFactory(this.data.pathNum, self, id)
                 firebaseApi.deleteData(path);
             },
+            editChild(key){
+                if(this.$route.params.chaid){
+                    router.push({ path: `/courses/${this.$route.params.cid}/chapters/${this.$route.params.chaid}/questions/${key}`})
+                } else if (this.$route.params.cid){
+                    router.push({ path: `/courses/${this.$route.params.cid}/chapters/${key}`})
+                } else {
+                    router.push({ path: `/courses/${key}`})
+                }
+
+            }
         },
          created() {
              const self = this;
@@ -85,6 +76,12 @@
     }
 </script>
 
-<style scoped>
+<style>
 
+@media only screen and (max-width: 900px) {
+    .one{
+        display: none;
+    }
+
+}
 </style>

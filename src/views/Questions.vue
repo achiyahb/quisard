@@ -36,9 +36,9 @@
                         sortable: 'true',
                     },
                     { text: 'תשובה נכונה', value: 'correctAnswer' },
-                    { text: 'מסיח 1', value: 'alt1' },
-                    { text: 'מסיח 2', value: 'alt2' },
-                    { text: 'מסיח 3', value: 'alt3' },
+                    { text: 'מסיח 1', value: 'alt1' ,style:'none'},
+                    { text: 'מסיח 2', value: 'alt2' ,style:'none'},
+                    { text: 'מסיח 3', value: 'alt3' ,style:'none'},
                 ],
                 pathNum: 5
             },

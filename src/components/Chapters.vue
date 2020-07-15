@@ -1,9 +1,7 @@
 <template>
   <div>
     <GenericTable :data="data" :cid="cid"></GenericTable>
-
     <v-container>
-
       <v-row>
         <v-spacer></v-spacer>
         <router-link :to="`/courses/${$route.params.cid}/chapters/new-chapter`">
@@ -33,10 +31,11 @@
             value: 'chapterName',
             align: 'start',
             sortable: 'true',
+
           },
           { text: 'פרטים', value: 'chapterDetails' },
           { text: 'מספר השאלות', value: 'questionsNumber' },
-          // { text: 'פעולות', value: 'actions', sortable: false },
+          // { text: 'פעולות', value: 'actions', sortable: false ,style:'none'},
         ],
         pathNum: 3
       },
@@ -46,7 +45,8 @@
   }
 </script>
 
-<style scoped>
-
-
+<style>
+  h1{
+    justify-content: center;
+  }
 </style>

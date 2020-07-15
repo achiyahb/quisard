@@ -36,9 +36,9 @@
                         sortable: 'true',
                     },
                  1:   { text: 'מטרת הקורס', value: 'goal' },
-                 2:   { text: 'פרטים', value: 'courseDetails' },
-                 3:   { text: 'שם המחבר', value: 'founderName' },
-                 4:   { text: 'פרטי המחבר', value: 'founderDetails' },
+                 2:   { text: 'פרטים', value: 'courseDetails' ,style:'none'},
+                 3:   { text: 'שם המחבר', value: 'founderName' ,style:'none'},
+                 4:   { text: 'פרטי המחבר', value: 'founderDetails' ,style:'none'},
                  // 5:   { text: 'פעולות', value: 'actions', sortable: false },
                 },
                 pathNum: 1

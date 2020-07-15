@@ -83,6 +83,7 @@
 
 <script>
     import firebaseApi from "../middelware/firebaseA";
+    import firebaseInstance from "../middelware/firebase";
 
     const tableName = "newCourseComp"
 
@@ -107,6 +108,7 @@
                 const self = this;
                 const path = firebaseApi.pathFactory(1, self)
                 firebaseApi.writeData(item, path);
+
             },
             update(item) {
                 const self = this;

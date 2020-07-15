@@ -5,8 +5,14 @@
     ".write": false,
     "users" : {
       "$uid" : {
-        ".write": "auth.uid !== null",
-        ".read": "auth.uid == $uid"
+        ".read": "auth.uid == $uid",
+        "courses": {
+          "$cid" : {
+            ".write": "auth.uid == $uid",
+            ".validate" : "newData.child('courseName').exists()",
+            "chapters" : {
+              ".validate" : "newData.child('chapterName').exists()",
+            }
           }
         }
       }
