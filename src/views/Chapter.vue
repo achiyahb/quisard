@@ -1,8 +1,8 @@
 <template>
     <div>
-        <new-chapter-comp :path-num="pathNum"></new-chapter-comp>
+        <new-chapter-comp :path-num="pathNum" :questionsNum="questionsNum"></new-chapter-comp>
         <h2>השאלות:</h2>
-        <questions></questions>
+        <questions  v-on:childToParent="onChildReload"></questions>
     </div>
 
 </template>
@@ -19,8 +19,14 @@
         name: "Course",
         components: {GenericTable, Questions, NewChapterComp},
         data: () => ({
-            pathNum: 4
+            pathNum: 4,
+          questionsNum: null
         }),
+      methods:{
+        onChildReload(value){
+          this.questionsNum= value
+        }
+      }
 
     }
 </script>

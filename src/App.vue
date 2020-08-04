@@ -9,7 +9,7 @@
                 color="indigo"
                 dark
         >
-          <v-toolbar-title>עורך השאלות</v-toolbar-title>
+          <v-toolbar-title>quiz 4 fun - עורך החידונים</v-toolbar-title>
           <v-spacer></v-spacer>
            <logout></logout>
           <login></login>

@@ -1,7 +1,7 @@
 <template>
     <v-form v-model="valid">
-        <h1 v-if="!$route.params.cid"> צור קורס חדש:</h1>
-        <h1 v-if="$route.params.cid">ערוך קורס קיים:</h1>
+        <h1 v-if="!$route.params.cid"> צור חידון חדש:</h1>
+        <h1 v-if="$route.params.cid">ערוך חידון קיים:</h1>
         <v-container>
             <v-row>
                 <v-col

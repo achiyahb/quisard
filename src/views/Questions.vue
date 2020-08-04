@@ -1,6 +1,7 @@
 <template>
     <div>
-        <GenericTable :data="data" :cid="cid"></GenericTable>
+      <h1>{{ num }}</h1>
+        <GenericTable :data="data" :cid="cid" v-on:childToParent="onChildReload"></GenericTable>
         <v-container>
             <v-row>
                 <v-spacer></v-spacer>
@@ -28,6 +29,7 @@
             dialog: false,
             data: {
                 tableName: 'chapterDetails',
+              num: null,
                 headers: [
                     {
                         text: 'שאלה',
@@ -45,6 +47,11 @@
 
             editedItem: {}
         }),
+      methods: {
+        onChildReload(value) {
+          this.$emit('childToParent', value)
+        }
+      }
     }
 </script>
 

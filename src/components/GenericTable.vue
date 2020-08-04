@@ -61,11 +61,17 @@
             }
         },
          created() {
+
              const self = this;
              const path = firebaseApi.pathFactory(this.data.pathNum, self)
              this.items = firebaseApi.getData(path)
                  .then(result => {
                      self.items = result
+                   let i = null
+                   for (let prop in self.items){
+                     i++
+                   }
+                   this.$emit('childToParent', i)
                  })
         },
         watch:{

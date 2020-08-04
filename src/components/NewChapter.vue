@@ -36,6 +36,7 @@
                             v-model="item.questionsNumber"
                             label="מספר השאלות"
                             required
+
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -65,7 +66,7 @@
 
     export default {
         name: 'chapterDetails',
-        props: ['chapter', 'pathNum'],
+        props: ['questionsNum', 'pathNum'],
         components: {},
         data: () => ({
             valid: false,
@@ -88,6 +89,12 @@
                 firebaseApi.updateData(item, path);
             }
         },
+      watch: {
+        questionsNum(){
+          this.item.questionsNumber = this.questionsNum
+          this.update(this.item)
+        }
+      },
         created() {
             if (!this.pathNum) {
                 return
@@ -97,6 +104,7 @@
             this.item = firebaseApi.getData(path)
                 .then(result => {
                     self.item = result
+                  self.item.questionsNumber = this.questionsNum
                 })
         }
     }
