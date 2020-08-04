@@ -30,13 +30,13 @@
                 tableName: 'courseDetails',
                 headers: {
                 0:    {
-                        text: 'שם הקורס',
+                        text: 'שם החידון',
                         value: 'courseName',
                         align: 'start',
                         sortable: 'true',
                     },
-                 1:   { text: 'מטרת הקורס', value: 'goal' },
-                 2:   { text: 'פרטים', value: 'courseDetails' ,style:'none'},
+                 1:   { text: 'מטרת החידון', value: 'goal' },
+                 2:   { text: 'פרטי החידון', value: 'courseDetails' ,style:'none'},
                  3:   { text: 'שם המחבר', value: 'founderName' ,style:'none'},
                  4:   { text: 'פרטי המחבר', value: 'founderDetails' ,style:'none'},
                  // 5:   { text: 'פעולות', value: 'actions', sortable: false },

@@ -11,7 +11,7 @@
                     <v-text-field
                             v-model="item.courseName"
                             :counter="100"
-                            label="שם הקורס"
+                            label="שם החידון"
                             required
                     ></v-text-field>
                 </v-col>
@@ -22,7 +22,7 @@
                 >
                     <v-text-field
                             v-model="item.goal"
-                            label="מטרת הקורס"
+                            label="מטרת החידון"
                             required
                     ></v-text-field>
                 </v-col>
@@ -55,7 +55,7 @@
                 >
                     <v-text-field
                             v-model="item.founderDetails"
-                            label="פרטי מחבר הקורס"
+                            label="פרטי מחבר החידון"
                             required
                     ></v-text-field>
                 </v-col>
